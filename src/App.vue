@@ -1,15 +1,18 @@
 <template>
   <div id="app">
     <eight-queen />
+    <eight-queen-jsx />
   </div>
 </template>
 
 <script>
 import EightQueen from "./components/EightQueen.vue";
+import EightQueenJsx from "./components/EightQueenJsx.vue";
 export default {
   name: "App",
   components: {
     EightQueen,
+    EightQueenJsx,
   },
 };
 </script>
