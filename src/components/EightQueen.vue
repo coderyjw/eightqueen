@@ -33,8 +33,44 @@ export default {
   },
   methods: {
     select(rIndex, cIndex) {
-      console.log(rIndex, cIndex);
-      this.grids[rIndex][cIndex].ok = true;
+      if (this.validate(rIndex, cIndex)) {
+        this.grids[rIndex][cIndex].ok = !this.grids[rIndex][cIndex].ok;
+      } else {
+        alert("当前位置不能放置皇后");
+      }
+    },
+    validate(rindex, cindex) {
+      // 横
+      for (let i = 0; i < this.grids[rindex].length; i++) {
+        if (this.grids[rindex][i].ok) {
+          return false;
+        }
+      }
+
+      // 竖
+      for (let i = 0; i < this.grids.length; i++) {
+        if (this.grids[i][cindex].ok) {
+          return false;
+        }
+      }
+
+      // 撇
+      for (let i = 0; i < this.grids[0].length; i++) {
+        let y = rindex + cindex - i;
+        if (y >= 0 && y < this.grids.length && this.grids[y][i].ok) {
+          return false;
+        }
+      }
+
+      // 捺
+      for (let i = 0; i < this.grids[0].length; i++) {
+        let y = rindex - cindex + i;
+        if (y >= 0 && y < this.grids.length && this.grids[y][i].ok) {
+          return false;
+        }
+      }
+
+      return true;
     },
   },
 };
@@ -62,6 +98,7 @@ export default {
   height: 50px;
   width: 400px;
   display: flow-root;
+  cursor: pointer;
 }
 
 .row:nth-child(2n) .cell:nth-child(2n) {
