@@ -1,9 +1,16 @@
 <template>
   <div>
-    <div class="title">八皇后</div>
+    <h1 class="title">八皇后</h1>
     <div class="grid">
-      <div class="row" v-for="(row, r_index) in grids" :key="r_index">
-        <div class="cell" v-for="cell in row" :key="cell.key">Q</div>
+      <div class="row" v-for="(row, rIndex) in grids" :key="rIndex">
+        <div
+          class="cell"
+          v-for="(cell, cIndex) in row"
+          :key="cell.key"
+          @click.stop="select(rIndex, cIndex)"
+        >
+          <div v-if="cell.ok">Q</div>
+        </div>
       </div>
     </div>
   </div>
@@ -24,7 +31,43 @@ export default {
       grids,
     };
   },
+  methods: {
+    select(rIndex, cIndex) {
+      console.log(rIndex, cIndex);
+      this.grids[rIndex][cIndex].ok = true;
+    },
+  },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.grid {
+  width: 400px;
+  margin: 0 auto;
+}
+.cell {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  background-color: #999;
+  float: left;
+}
+
+.cell:nth-child(2n) {
+  background-color: #efefef;
+}
+
+.row {
+  height: 50px;
+  width: 400px;
+  display: flow-root;
+}
+
+.row:nth-child(2n) .cell:nth-child(2n) {
+  background-color: #999;
+}
+.row:nth-child(2n) .cell:nth-child(2n - 1) {
+  background-color: #efefef;
+}
+</style>
